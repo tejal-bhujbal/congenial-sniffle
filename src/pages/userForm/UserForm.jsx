@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {Form} from "react-bootstrap";
+import { UserFormContext } from "../userDashboard/UserDashboard"
 
 class UserForm extends Component {
+    static contextType = UserFormContext;
+
     render() {
         const {formField, formError} = this.props;
         return (
             <Form>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" value={formField.name} onChange={this.props.onChangeHandler} />
+                    <Form.Control type="text" placeholder="Enter name" value={formField.name} onChange={this.props.onChangeHandler} disabled={this.context} />
                     <Form.Text className="text-muted"> {formError.name} </Form.Text>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Label>Employee code</Form.Label>
-                    <Form.Control type="text" placeholder="Enter employee code" value={formField.empCode} onChange={this.props.onChangeHandler} />
+                    <Form.Control type="text" placeholder="Enter employee code" value={formField.empCode} onChange={this.props.onChangeHandler} disabled={this.context} />
                     <Form.Text className="text-muted"> {formError.empCode} </Form.Text>
                 </Form.Group>
 

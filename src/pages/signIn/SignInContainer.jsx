@@ -80,7 +80,6 @@ class SignInContainer extends Component {
     }
 
     render() {
-console.log("inside sign in container");        
          const {formField, formError} = this.state;
         return (
             <SignIn formField={formField} formError={formError} onChangeHandler={this.onChangeHandler} onSubmitHandler={this.onSubmitHandler} />

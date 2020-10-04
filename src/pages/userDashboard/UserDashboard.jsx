@@ -6,6 +6,9 @@ import {Row, Col, Button} from 'react-bootstrap';
 import {ReactTable, Popup, userService} from '../../common';
 import {getAllUsers} from '../../redux/actions';
 
+export const UserFormContext = React.createContext();
+const UserFormContextProvider = UserFormContext.Provider;
+
 class UserDashboard extends Component {
     constructor(){
         super();
@@ -31,7 +34,8 @@ class UserDashboard extends Component {
                 body: '',
                 secondaryBtn: '',
                 primaryBtn: '',
-            }
+            },
+            isEdit: false
         }
     }
 
@@ -52,11 +56,11 @@ class UserDashboard extends Component {
                     let {popup} = prevState;
                     popup.display = true;
                     popup.title = 'Add User Form';
-                    popup.body = {
-                        isEdit: false
-                    };
-                    popup.primaryBtn = 'Submit';
+                    popup.body = {};
+                    popup.secondaryBtn = 'Cancel';
+                    popup.primaryBtn = 'Add';
                     return {
+                        isEdit: false,
                         popup: popup
                     }
                 });
@@ -66,11 +70,11 @@ class UserDashboard extends Component {
                     let {popup} = prevState;
                     popup.display = true;
                     popup.title = 'Edit User Form';
-                    popup.body = {
-                        isEdit: false
-                    };
+                    popup.body = {};
+                    popup.secondaryBtn = 'Cancel';
                     popup.primaryBtn = 'Update';
                     return {
+                        isEdit: true,
                         popup: popup
                     }
                 });
@@ -104,6 +108,7 @@ class UserDashboard extends Component {
                 primaryBtn: '',
             };
             return {
+                isEdit: false,
                 popup: popup
             }
         });
@@ -114,10 +119,16 @@ class UserDashboard extends Component {
     }
 
     render() {
-        const {thead, tbody, rowActions, popup} = this.state;
+        const {thead, tbody, rowActions, popup, isEdit} = this.state;
         return (
             <div className="conatainer mt-5">
-                {popup.display && <Popup display={popup.display} title={popup.title} body={popup.body} secondaryBtn={popup.secondaryBtn} primaryBtn={popup.primaryBtn} popupCloseHandler={this.popupCloseHandler} />}
+                {
+                    popup.display 
+                    &&             
+                    <UserFormContextProvider value={isEdit}>
+                    <Popup display={popup.display} title={popup.title} body={popup.body} secondaryBtn={popup.secondaryBtn} primaryBtn={popup.primaryBtn} popupCloseHandler={this.popupCloseHandler} />
+                    </UserFormContextProvider>
+                }
                 <Row className="mb-5">
                     <Col>
                         <Button className="btn primary float-left" onClick={this.handleLogOut}>Log Out</Button>

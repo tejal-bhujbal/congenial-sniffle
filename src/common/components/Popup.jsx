@@ -6,7 +6,6 @@ import {UserFormContainer} from '../../pages';
 class Popup extends Component {
     render(){
         const {title, body, secondaryBtn, primaryBtn, display} = this.props;
-console.log(display);        
         return (
             <Modal show={display} className={display ? "showModal" : null} onHide={(e) => this.props.popupCloseHandler('Cancel')} >
                 <Modal.Header>
@@ -17,7 +16,7 @@ console.log(display);
                     {
                         (body && typeof body === 'object')
                             ?
-                            <UserFormContainer isEdit={body.isEdit} />
+                            <UserFormContainer /> 
                             :
                             body
                     }
